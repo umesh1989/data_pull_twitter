@@ -1,0 +1,7 @@
+ERROR:root:2022-05-10 23-05-12
+Traceback (most recent call last):
+  File "/Users/umesh/PycharmProjects/ikea_tweets/venv/driver_file.py", line 72, in <module>
+    tweets_res = get_tweets()
+  File "/Users/umesh/PycharmProjects/ikea_tweets/venv/driver_file.py", line 36, in get_tweets
+    data = response.json()['data']
+KeyError: 'data'

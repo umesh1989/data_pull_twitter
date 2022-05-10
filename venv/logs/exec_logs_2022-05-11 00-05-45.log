@@ -1,0 +1,8 @@
+INFO:root:{'errors': [{'parameters': {'end_time': ['2022-05-11T00:00Z']}, 'message': "Invalid 'end_time':'2022-05-11T00:00Z'. 'end_time' must be a minimum of 10 seconds prior to the request time."}], 'title': 'Invalid Request', 'detail': 'One or more parameters to your request was invalid.', 'type': 'https://api.twitter.com/2/problems/invalid-request'}
+ERROR:root:2022-05-11 00-05-45
+Traceback (most recent call last):
+  File "/Users/umesh/PycharmProjects/ikea_tweets/venv/driver_file.py", line 72, in <module>
+    tweet_counts = get_count()
+  File "/Users/umesh/PycharmProjects/ikea_tweets/venv/driver_file.py", line 20, in get_count
+    tweets_at_source = response.json()['meta']['total_tweet_count']
+KeyError: 'meta'
