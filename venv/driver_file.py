@@ -1,4 +1,4 @@
-"""This the main driver file which will trigger the execution. It will first hit the count api to get the count for a
+"""This is the main driver file which will trigger the execution. It will first hit the count api to get the count for a
 date range. After that hit the search api to get data. This script updates the execution date, job start and end time,
 tweets at source and tweets collected."""
 import datetime
@@ -34,6 +34,7 @@ def get_tweets():
     while True:
         data_list = []
         response = cu.fetch_data(url=url, params=query_params)
+        logging.info(response.json())
         data = response.json()['data']
         for tweet in data:
             tid = tweet['id']
@@ -47,7 +48,7 @@ def get_tweets():
             emoticon = '  '.join(c for c in tt if c in emoji.UNICODE_EMOJI['en'])
             encoded_content = emoticon.encode('unicode-escape').decode('ASCII')
             # decoded_content = encoded_content.encode('ASCII').decode('unicode-escape')
-            """above line is commented because, this line decodes the ascii value of emoji to display 
+            """above line is commented because, this line decodes the ASCII value of emoji to display 
             it in the graphic manner"""
 
             data_list.append((tid, tt, retweets, reply, like_count, quote, created_at, auth_id, encoded_content))

@@ -37,7 +37,20 @@ Along with the above-mentioned attributes many more are also being fetched, but 
    1. mentions
    2. info of mentioned users
 
-Above additional info can help us in figuring out the reach and engagement one positive or negative tweet. Moreover, it 
+Details list of attributes that are fetched now:
+
+**"expansions":** "author_id,attachments.media_keys,in_reply_to_user_id,entities.mentions.username,geo.place_id",
+
+**"tweet.fields":** "id,text,created_at,author_id,geo,in_reply_to_user_id,attachments,public_metrics,reply_settings,conversation_id,entities,referenced_tweets,source",
+
+
+**"user.fields":** "id,name,username,created_at,description,profile_image_url,location,public_metrics,url",
+
+**"place.fields":** "full_name,id,country,country_code,geo,name,place_type",
+
+**"media.fields":** "media_key,type,url"
+
+Above-mentioned additional info can help us in figuring out the reach and engagement of any positive or negative tweet. Moreover, it 
 can give us insight about the user and help us understand user better.
 
 **Database and Tables:**\
@@ -48,9 +61,18 @@ day and without any language filter it was around 6-7k. Now, even if we consider
 a year, which doesn't look like a huge number. Mysql can easily handle this much data, and the query will be faster too
  as compared to Hive, or any other data storing tool.
 
+**Exec_stats_table:**
+
+    create table execution_stats(exec_id int not null auto_increment, execution_date date, starttime datetime, endtime datetime, tweets_at_source int, tweets_collected int, status varchar(8), primary key (exec_id));
+
+**Tweets table**
+
+    create table tweets1 (id bigint, msg text, retweets int, reply int, likes int, quotes int, created_at datetime, author_id bigint,emoji text, primary key(id));
+
+
 Currently, we are using two data table:
 1. Execution status: this will store the info and status of the data fetch job.
-2. Tweets table: This table will store the properties mentioned above in this writeup.
+2. Tweets table: This table will store the properties mentioned above in this writeup. Since this table already has author id which we can use to join with user table and **user table** can be joined with **media table**.
 
 **Logging:**\
 Python default logger has been used here. A log file will get created in the log folder with date and time. Couple of 
@@ -60,11 +82,12 @@ logs and failure traceback will be captured in these logs.
 Currently Exception handling is at a very broad level in this. Which can be detailed if it comes to develop this at prod 
 level.
 
-**Current Test Case**\
+**Current Test Case**
+
 For now as part of test cases, I am comparing the number of tweets at source and tweets collected, if, the count matches
 the job execution status is updated with success else with failure.
 
-**Future Enhancements**\
+**Future Enhancements**
 1. More detailed level exception handling can be done where retry option can also be implemented.
 2. New tables User and media can be introduced to store additional information that is being fetched.
 3. Instead of using the config.ini file a key vault service can be used.
